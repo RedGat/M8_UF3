@@ -22,10 +22,11 @@
 
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			
-			$usr = $_POST['user'];
-			$password = $_POST['pswd'];
+			
 			$conn = mysqli_connect('localhost','pop','pop');
 			mysqli_select_db($conn, 'login');
+			$usr = mysqli_real_escape_string($conn, $_POST['user']);
+			$password =  mysqli_real_escape_string($conn, $_POST['pswd']);
 
 			$consulta = "SELECT id, user FROM users WHERE user = '" . $usr . "' and password = SHA2('" .$password. "',512);";
 
@@ -41,17 +42,7 @@
 			$num = mysqli_num_rows($resultat);
 
 			
-/*
-
-
-	        while($row = mysqli_fetch_assoc($resultat) ) {
-	        	
-	        	echo "<br>Hola, " . $row['user'] . ". El teu id és: " . $row['id'];
-	        	
-
-	        }
-	
- */           
+       
 
 	        if($num == 1) {
 	        	echo "Entres";
